@@ -48,6 +48,28 @@ namespace PasswordManager_Desktop
             conn.Close();
         }
 
+        public bool ExistInTable(string given, string column, string tableName)
+        {
+            conn.Open();
+            bool existence = false;
+            string s = $"SELECT * FROM {tableName} WHERE {column} = '{given}';";
+            SqlCommand cmd = new SqlCommand(s, conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows) existence = true;
+            conn.Close();
+            return existence;
+        }
+
+        public string GetDataFromTable(string selectionColumn, string relativeColumn, string target, string tableName)
+        {
+            conn.Open();
+            string sql = $"SELECT {selectionColumn} FROM {tableName} WHERE {relativeColumn} = '{target}'";
+            conn.Close();
+
+            return sql;
+        }
+
+
         private void _executeNonQueryStatement(string command)
         {
             try

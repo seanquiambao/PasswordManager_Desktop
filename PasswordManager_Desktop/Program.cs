@@ -14,10 +14,12 @@ namespace PasswordManager_Desktop
         /// </summary>
 
         public static SQLDatabase sql;
+        public static Hashing HashAlgorithm;
         [STAThread]
         static void Main()
         {
             sql = new SQLDatabase();
+            HashAlgorithm = new Hashing();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
