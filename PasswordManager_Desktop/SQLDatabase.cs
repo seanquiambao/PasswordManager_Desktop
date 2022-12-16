@@ -28,26 +28,24 @@ namespace PasswordManager_Desktop
                 Console.WriteLine("Unable to connect to database\n");
                 _throwError(ex);
             }
-
-            CreateUserDatabaseTable();
-        }
-
-        void CreateUserDatabaseTable()
-        {
-            string s = "CREATE TABLE IF NOT EXISTS 'User Database'(username STRING, password STRING, iterations INT)";
-            _executeNonQueryStatement(s);
+            conn.Close();
         }
 
         public void InsertTable(string[] columns, string tableName)
         {
-            string s = $"INSERT INTO '{tableName}' VALUES(";
+            conn.Open();
+            string s = $"INSERT INTO {tableName} VALUES(";
             for(int i = 0; i < columns.Length; ++i)
             {
-                s += $"'{columns[i]}', ";
+                s += $"'{columns[i]}'";
+                if (i != (columns.Length) - 1) s += ", ";
             }
             s += ");";
 
+            Console.WriteLine(s);
+
             _executeNonQueryStatement(s);
+            conn.Close();
         }
 
         private void _executeNonQueryStatement(string command)

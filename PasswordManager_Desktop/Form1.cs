@@ -38,10 +38,8 @@ namespace PasswordManager_Desktop
         private void button2_Click(object sender, EventArgs e)
         {
             if(isEmptyPrompt()) MessageBox.Show("Missing Fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            string password = textBox2.Text;
             string[] s = {textBox1.Text, textBox2.Text};
-
-            Program.sql.InsertTable(s, "User Database");
+            Program.sql.InsertTable(s, "UserDatabase");
 
         }
 
@@ -50,6 +48,10 @@ namespace PasswordManager_Desktop
             if (string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrEmpty(textBox2.Text)) return true;
             return false;
         }
- 
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
