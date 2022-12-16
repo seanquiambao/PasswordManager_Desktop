@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Data.SqlClient;
+
 namespace PasswordManager_Desktop
 {
     public partial class LoginForm : Form
@@ -39,8 +41,7 @@ namespace PasswordManager_Desktop
             string password = textBox2.Text;
             string[] s = {textBox1.Text, textBox2.Text};
 
-
-
+            Program.sql.InsertTable(s, "User Database");
 
         }
 

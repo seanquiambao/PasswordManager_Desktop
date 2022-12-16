@@ -12,10 +12,12 @@ namespace PasswordManager_Desktop
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+
+        public static SQLDatabase sql;
         [STAThread]
         static void Main()
         {
-            SQLDatabase sql = new SQLDatabase();
+            sql = new SQLDatabase();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
