@@ -10,20 +10,29 @@ namespace PasswordManager_Desktop
     class Hashing
     {
 
-        public string PasswordHashing(string password, int iterations)
+        public string PasswordHashing(string password)
         {
-            byte[] salt;
-            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            byte[] tmpSource;
+            byte[] tmpHash;
 
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations);
-            byte[] hash = pbkdf2.GetBytes(20);
+            tmpSource = ASCIIEncoding.ASCII.GetBytes(password);
+            tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
 
-            byte[] hashBytes = new byte[36];
-            Array.Copy(salt, 0, hashBytes, 0, 16);
-            Array.Copy(hash, 0, hashBytes, 16, 20);
+            string savedPasswordHash = ByteArrayToString(tmpHash);
 
-            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+
             return savedPasswordHash;
+        }
+
+        static string ByteArrayToString(byte[] arrInput)
+        {
+            int i;
+            StringBuilder sOutput = new StringBuilder(arrInput.Length);
+            for (i = 0; i < arrInput.Length; i++)
+            {
+                sOutput.Append(arrInput[i].ToString("X2"));
+            }
+            return sOutput.ToString();
         }
     }
 }

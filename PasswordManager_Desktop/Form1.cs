@@ -27,7 +27,7 @@ namespace PasswordManager_Desktop
 
         private void textBox2_TextChanged_1(object sender, EventArgs e)
         {
-
+            textBox2.UseSystemPasswordChar = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,13 +37,31 @@ namespace PasswordManager_Desktop
                 MessageBox.Show("Missing Fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (!Program.sql.ExistInTable(textBox1.Text, "Username", "UserDatabase"))
+            if (!Program.Query.ExistInTable(textBox1.Text, "Username", "UserDatabase"))
             {
                 MessageBox.Show("Username or Password is incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
+            DataTable userData = Program.Query.GetDataFromTable(textBox1.Text, "Username", "UserDatabase");
+            DataRow row = userData.Rows[0];
+            string givenHashedPassword = Program.HashAlgorithm.PasswordHashing(textBox2.Text);
 
+            Console.WriteLine(givenHashedPassword);
+            Console.WriteLine(row[2].ToString());
+
+            if(givenHashedPassword != row[2].ToString())
+            {
+                MessageBox.Show("Username or Password is incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            MessageBox.Show("Logged in!", "Logged in", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            textBox1.Text = String.Empty;
+            textBox2.Text = String.Empty;
+
+            var mainProgram = new Form2();
+            mainProgram.Show();
 
         }
 
@@ -54,18 +72,17 @@ namespace PasswordManager_Desktop
                 MessageBox.Show("Missing Fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (Program.sql.ExistInTable(textBox1.Text, "Username", "UserDatabase"))
+            if (Program.Query.ExistInTable(textBox1.Text, "Username", "UserDatabase"))
             {
                 MessageBox.Show("Username already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            Random rand = new Random();
-            int iteration = rand.Next(1000, 9999);
-            string hashedPassword = Program.HashAlgorithm.PasswordHashing(textBox2.Text, iteration);
-            string[] s = { textBox1.Text, hashedPassword, iteration.ToString() };
-            Program.sql.InsertTable(s, "UserDatabase");
+            string hashedPassword = Program.HashAlgorithm.PasswordHashing(textBox2.Text);
+            string[] s = { textBox1.Text, hashedPassword };
+            Program.NonQuery.InsertTable(s, "UserDatabase");
             MessageBox.Show("Registered", "Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            textBox1.Text = String.Empty;
+            textBox2.Text = String.Empty;
 
         }
 

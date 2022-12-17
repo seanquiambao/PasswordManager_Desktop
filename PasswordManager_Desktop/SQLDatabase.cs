@@ -10,9 +10,9 @@ using System.Windows;
 
 namespace PasswordManager_Desktop
 {
-    class SQLDatabase
+    public class SQLDatabase
     {
-        SqlConnection conn;
+        public static SqlConnection conn;
         string connectionString;
 
         public SQLDatabase()
@@ -31,60 +31,7 @@ namespace PasswordManager_Desktop
             conn.Close();
         }
 
-        public void InsertTable(string[] columns, string tableName)
-        {
-            conn.Open();
-            string s = $"INSERT INTO {tableName} VALUES(";
-            for(int i = 0; i < columns.Length; ++i)
-            {
-                s += $"'{columns[i]}'";
-                if (i != (columns.Length) - 1) s += ", ";
-            }
-            s += ");";
-
-            Console.WriteLine(s);
-
-            _executeNonQueryStatement(s);
-            conn.Close();
-        }
-
-        public bool ExistInTable(string given, string column, string tableName)
-        {
-            conn.Open();
-            bool existence = false;
-            string s = $"SELECT * FROM {tableName} WHERE {column} = '{given}';";
-            SqlCommand cmd = new SqlCommand(s, conn);
-            SqlDataReader reader = cmd.ExecuteReader();
-            if (reader.HasRows) existence = true;
-            conn.Close();
-            return existence;
-        }
-
-        public string GetDataFromTable(string selectionColumn, string relativeColumn, string target, string tableName)
-        {
-            conn.Open();
-            string sql = $"SELECT {selectionColumn} FROM {tableName} WHERE {relativeColumn} = '{target}'";
-            conn.Close();
-
-            return sql;
-        }
-
-
-        private void _executeNonQueryStatement(string command)
-        {
-            try
-            {
-                SqlCommand cmd = new SqlCommand(command, conn);
-                cmd.ExecuteNonQuery();
-            }
-            catch (SqlException ex)
-            {
-                _throwError(ex);
-            }
-            
-        }
-
-        private void _throwError(SqlException exception)
+        public static void _throwError(SqlException exception)
         {
             for (int i = 0; i < exception.Errors.Count; i++)
             {
