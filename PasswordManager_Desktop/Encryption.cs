@@ -11,11 +11,8 @@ namespace PasswordManager_Desktop
     class Encryption
     {
 
-        public byte[] EncryptStringToBytes(string plainText)
+        public byte[] EncryptStringToBytes(string plainText, byte[] Key, byte[] IV)
         {
-            Aes myAes = Aes.Create();
-            byte[] Key = myAes.Key;
-            byte[] IV = myAes.IV;
             if (plainText == null || plainText.Length <= 0) throw new ArgumentNullException("plainText");
             checkForArguments(Key, IV);
 
@@ -47,11 +44,8 @@ namespace PasswordManager_Desktop
             return encrypted;
         }
 
-        public string DecryptStringFromBytes(byte[] cipherText)
+        public string DecryptStringFromBytes(byte[] cipherText, byte[] Key, byte[] IV)
         {
-            Aes myAes = Aes.Create();
-            byte[] Key = myAes.Key;
-            byte[] IV = myAes.IV;
             if (cipherText == null || cipherText.Length <= 0) throw new ArgumentNullException("cipherText");
             checkForArguments(Key, IV);
 
@@ -66,7 +60,7 @@ namespace PasswordManager_Desktop
 
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
-                using (MemoryStream msDecrypt = new MemoryStream())
+                using (MemoryStream msDecrypt = new MemoryStream(cipherText))
                 {
                     using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {

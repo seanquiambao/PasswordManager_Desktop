@@ -15,8 +15,8 @@ namespace PasswordManager_Desktop
         public Form2()
         {
             InitializeComponent();
-            CreateTable(dataGridView1);
-            LoadUserTable(dataGridView1);
+            CreateTable(userAccounts);
+            LoadUserTable(userAccounts);
         }
 
         private void newKeyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -30,24 +30,13 @@ namespace PasswordManager_Desktop
             Application.Exit();
         }
 
-        private void registerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
-            
-
-        }
-
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
             Application.Exit();
         }
 
-        private void CreateTable(DataGridView dataGridView1)
+        private void CreateTable(DataGridView userAccounts)
         {
 
             DataGridViewTextBoxColumn titleCol = new DataGridViewTextBoxColumn();
@@ -62,21 +51,21 @@ namespace PasswordManager_Desktop
             passwordCol.HeaderText = "Password";
             urlCol.HeaderText = "URL";
 
-            dataGridView1.Columns.AddRange(titleCol, userCol, passwordCol, urlCol);
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.ReadOnly = true;
+            userAccounts.Columns.AddRange(titleCol, userCol, passwordCol, urlCol);
+            userAccounts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            userAccounts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            userAccounts.ReadOnly = true;
 
-            dataGridView1.Location = new Point(122, 108);
-            dataGridView1.Size = new Size(545, 325);
-            this.Controls.Add(dataGridView1);
+            userAccounts.Location = new Point(122, 108);
+            userAccounts.Size = new Size(545, 325);
+            this.Controls.Add(userAccounts);
 
         }
 
-        private void LoadUserTable(DataGridView dataGridView1)
+        private void LoadUserTable(DataGridView userAccounts)
         {
-            dataGridView1.Rows.Clear();
-            dataGridView1.Refresh();
+            userAccounts.Rows.Clear();
+            userAccounts.Refresh();
 
             string username = Program.GetUsername();
             DataTable data = Program.Query.FetchTable(username);
@@ -84,17 +73,37 @@ namespace PasswordManager_Desktop
             for(int i = 0; i < data.Rows.Count; ++i)
             {
                 DataRow row = data.Rows[i];
-                dataGridView1.Rows.Add(row[1].ToString(), row[2].ToString(), "***********", row[4].ToString());
+                userAccounts.Rows.Add(row[1].ToString(), row[2].ToString(), "***********", row[4].ToString());
             }
-        }
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
         }
 
         private void refreshTableToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LoadUserTable(dataGridView1);
+            LoadUserTable(userAccounts);
+        }
+
+        private void userAccounts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string username = Program.GetUsername();
+            Console.WriteLine("Test");
+
+            DataTable userData = Program.Query.FetchTable(username);
+            DataRow userRow = userData.Rows[e.RowIndex];
+
+            
+            if (e.ColumnIndex == 2)
+            {
+                DataTable AESData = Program.Query.GetDataFromTable(username, "username", "UserDatabase");
+                DataRow AESRow = AESData.Rows[0];
+                byte[] key = (byte[])AESRow[3];
+                byte[] iv = (byte[])AESRow[4];
+                byte[] cipherPassword = (byte[])userRow[3];
+                string plainPassword = Program.AESAlgorithm.DecryptStringFromBytes(cipherPassword, key, iv);
+
+                Clipboard.SetText(plainPassword);
+
+            }
+            MessageBox.Show($"Copied value to clipboard", "Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

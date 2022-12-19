@@ -31,7 +31,14 @@ namespace PasswordManager_Desktop
                 MessageBox.Show($"Account already exists in {titleTextBox.Text}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            byte[] encryptedPassword = Program.AESAlgorithm.EncryptStringToBytes(passwordTextBox.Text);
+
+            DataTable data = Program.Query.GetDataFromTable(username, "username", "UserDatabase");
+            DataRow row = data.Rows[0];
+
+            byte[] key = (byte[])row[3];
+            byte[] iv = (byte[])row[4];
+            
+            byte[] encryptedPassword = Program.AESAlgorithm.EncryptStringToBytes(passwordTextBox.Text, key, iv);
             string[] columns = { titleTextBox.Text, usernameTextBox.Text, urlTextBox.Text };
             Program.NonQuery.InsertTable(columns, encryptedPassword ,username);
 

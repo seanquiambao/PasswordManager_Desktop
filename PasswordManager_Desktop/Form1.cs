@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime;
+using System.Security.Cryptography;
 
 using System.Data.SqlClient;
 
@@ -87,7 +88,14 @@ namespace PasswordManager_Desktop
             }
             string hashedPassword = Program.HashAlgorithm.PasswordHashing(textBox2.Text);
             string[] s = { textBox1.Text, hashedPassword };
-            Program.NonQuery.InsertTable(s, "UserDatabase");
+            
+            // Creating Keys
+            Aes aes = Aes.Create();
+            byte[] key = aes.Key;
+            byte[] iv = aes.IV;
+
+
+            Program.NonQuery.InsertTable(s, key, iv, "UserDatabase");
             MessageBox.Show("Registered", "Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Program.NonQuery.CreateUserTable(textBox1.Text);
             textBox1.Text = String.Empty;

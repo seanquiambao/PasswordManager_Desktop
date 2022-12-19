@@ -10,21 +10,26 @@ namespace PasswordManager_Desktop
 {
     class SQLNonQuery
     {
-        public void InsertTable(string[] columns, string tableName)
+        public void InsertTable(string[] columns, byte[] key, byte[] iv,string tableName)
         {
             SQLDatabase.conn.Open();
-            string s = $"INSERT INTO {tableName} VALUES(";
-            for (int i = 0; i < columns.Length; ++i)
+            string s = $"INSERT INTO {tableName} VALUES('{columns[0]}', '{columns[1]}', @key, @iv);";
+
+            try
             {
-                s += $"'{columns[i]}'";
-                if (i != (columns.Length) - 1) s += ", ";
+                SqlCommand cmd = new SqlCommand(s, SQLDatabase.conn);
+                cmd.Parameters.AddWithValue("@key", key);
+                cmd.Parameters.AddWithValue("@iv", iv);
+                cmd.ExecuteScalar();
             }
-            s += ");";
-
-            Console.WriteLine(s);
-
-            _executeNonQueryStatement(s);
-            SQLDatabase.conn.Close();
+            catch (SqlException ex)
+            {
+                SQLDatabase._throwError(ex);
+            }
+            finally
+            {
+                SQLDatabase.conn.Close();
+            }
         }
 
         public void InsertTable(string[] columns, byte[] password, string tableName)
