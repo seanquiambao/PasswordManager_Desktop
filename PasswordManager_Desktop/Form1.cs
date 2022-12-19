@@ -57,11 +57,19 @@ namespace PasswordManager_Desktop
             }
 
             MessageBox.Show("Logged in!", "Logged in", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            
+
+            Program.SetUsername(textBox1.Text);
+
             textBox1.Text = String.Empty;
             textBox2.Text = String.Empty;
 
             var mainProgram = new Form2();
             mainProgram.Show();
+            this.Hide();
+
+
 
         }
 
@@ -81,6 +89,7 @@ namespace PasswordManager_Desktop
             string[] s = { textBox1.Text, hashedPassword };
             Program.NonQuery.InsertTable(s, "UserDatabase");
             MessageBox.Show("Registered", "Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Program.NonQuery.CreateUserTable(textBox1.Text);
             textBox1.Text = String.Empty;
             textBox2.Text = String.Empty;
 
@@ -92,9 +101,16 @@ namespace PasswordManager_Desktop
             return false;
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            textBox2.UseSystemPasswordChar = (textBox2.UseSystemPasswordChar) ? false : true;
+        }
+
         private void LoginForm_Load(object sender, EventArgs e)
         {
 
         }
+
+        
     }
 }

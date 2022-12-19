@@ -26,6 +26,20 @@ namespace PasswordManager_Desktop
             return data;
         }
 
+        public DataTable FetchTable(string tableName)
+        {
+            var data = new DataTable();
+
+            SQLDatabase.conn.Open();
+            string s = $"SELECT * FROM {tableName}";
+            SqlCommand cmd = new SqlCommand(s, SQLDatabase.conn);
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            adapter.Fill(data);
+            SQLDatabase.conn.Close();
+
+            return data;
+        }
+
         public bool ExistInTable(string target, string column, string tableName)
         {
             SQLDatabase.conn.Open();

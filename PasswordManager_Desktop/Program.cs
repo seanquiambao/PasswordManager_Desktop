@@ -13,6 +13,7 @@ namespace PasswordManager_Desktop
         /// The main entry point for the application.
         /// </summary>
 
+        private static string username;
         public static SQLDatabase SQL;
         public static SQLNonQuery NonQuery;
         public static SQLQuery Query;
@@ -28,6 +29,16 @@ namespace PasswordManager_Desktop
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginForm());
+        }
+
+        public static void SetUsername(string newUsername)
+        {
+            username = newUsername;
+        }
+
+        public static string GetUsername()
+        {
+            return username;
         }
     }
 }

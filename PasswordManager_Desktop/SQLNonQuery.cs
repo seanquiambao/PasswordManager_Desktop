@@ -25,6 +25,20 @@ namespace PasswordManager_Desktop
             _executeNonQueryStatement(s);
             SQLDatabase.conn.Close();
         }
+        
+        public void CreateUserTable(string username)
+        {
+            SQLDatabase.conn.Open();
+            string s = $"CREATE TABLE [dbo].[{username}](" +
+                $"[Id] INT IDENTITY (1,1) NOT NULL, " +
+                $"[Title] VARCHAR(50)," +
+                $"[Username] VARCHAR(50) NOT NULL, " +
+                $"[Password] VARCHAR(50) NOT NULL, " +
+                $"[URL] VARCHAR(MAX) NOT NULL," +
+                $"PRIMARY KEY CLUSTERED ([Id] ASC));";
+            _executeNonQueryStatement(s);
+            SQLDatabase.conn.Close();
+        }
 
         
 
