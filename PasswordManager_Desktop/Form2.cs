@@ -12,20 +12,17 @@ namespace PasswordManager_Desktop
 {
     public partial class Form2 : Form
     {
-        public DataGridView userAccounts;
         public Form2()
         {
             InitializeComponent();
-            userAccounts = new DataGridView();
-            CreateTable(userAccounts);
-            LoadUserTable(userAccounts);
+            CreateTable(dataGridView1);
+            LoadUserTable(dataGridView1);
         }
 
         private void newKeyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var AddKeyWindows = new AddKeyForm();
             AddKeyWindows.Show();
-
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -50,7 +47,7 @@ namespace PasswordManager_Desktop
             Application.Exit();
         }
 
-        private void CreateTable(DataGridView userAccounts)
+        private void CreateTable(DataGridView dataGridView1)
         {
 
             DataGridViewTextBoxColumn titleCol = new DataGridViewTextBoxColumn();
@@ -65,21 +62,21 @@ namespace PasswordManager_Desktop
             passwordCol.HeaderText = "Password";
             urlCol.HeaderText = "URL";
 
-            userAccounts.Columns.AddRange(titleCol, userCol, passwordCol, urlCol);
-            userAccounts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            userAccounts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            userAccounts.ReadOnly = true;
+            dataGridView1.Columns.AddRange(titleCol, userCol, passwordCol, urlCol);
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.ReadOnly = true;
 
-            userAccounts.Location = new Point(122, 108);
-            userAccounts.Size = new Size(545, 325);
-            this.Controls.Add(userAccounts);
+            dataGridView1.Location = new Point(122, 108);
+            dataGridView1.Size = new Size(545, 325);
+            this.Controls.Add(dataGridView1);
 
         }
 
-        private void LoadUserTable(DataGridView userAccounts)
+        private void LoadUserTable(DataGridView dataGridView1)
         {
-            userAccounts.Rows.Clear();
-            userAccounts.Refresh();
+            dataGridView1.Rows.Clear();
+            dataGridView1.Refresh();
 
             string username = Program.GetUsername();
             DataTable data = Program.Query.FetchTable(username);
@@ -87,7 +84,7 @@ namespace PasswordManager_Desktop
             for(int i = 0; i < data.Rows.Count; ++i)
             {
                 DataRow row = data.Rows[i];
-                userAccounts.Rows.Add(row[1].ToString(), row[2].ToString(), "***********", row[4].ToString());
+                dataGridView1.Rows.Add(row[1].ToString(), row[2].ToString(), "***********", row[4].ToString());
             }
         }
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -97,7 +94,7 @@ namespace PasswordManager_Desktop
 
         private void refreshTableToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LoadUserTable(userAccounts);
+            LoadUserTable(dataGridView1);
         }
     }
 }
