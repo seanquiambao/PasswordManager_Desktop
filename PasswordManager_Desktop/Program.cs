@@ -18,6 +18,7 @@ namespace PasswordManager_Desktop
         public static SQLNonQuery NonQuery;
         public static SQLQuery Query;
         public static Hashing HashAlgorithm;
+        public static Encryption AESAlgorithm;
         [STAThread]
         static void Main()
         {
@@ -25,6 +26,7 @@ namespace PasswordManager_Desktop
             NonQuery = new SQLNonQuery();
             Query = new SQLQuery();
             HashAlgorithm = new Hashing();
+            AESAlgorithm = new Encryption();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

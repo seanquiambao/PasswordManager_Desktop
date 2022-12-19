@@ -87,7 +87,7 @@ namespace PasswordManager_Desktop
             for(int i = 0; i < data.Rows.Count; ++i)
             {
                 DataRow row = data.Rows[i];
-                userAccounts.Rows.Add(row[1].ToString(), row[2].ToString(), row[3].ToString(), row[4].ToString());
+                userAccounts.Rows.Add(row[1].ToString(), row[2].ToString(), "***********", row[4].ToString());
             }
         }
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
