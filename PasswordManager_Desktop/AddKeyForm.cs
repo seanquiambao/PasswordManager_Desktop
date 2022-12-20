@@ -59,13 +59,6 @@ namespace PasswordManager_Desktop
             return (titleTextBox.Text == String.Empty || usernameTextBox.Text == String.Empty || passwordTextBox.Text == String.Empty || urlTextBox.Text == String.Empty);
         }
 
-        private void AddKeyForm_Load(object sender, EventArgs e)
-        {
-            
-
-
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();

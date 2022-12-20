@@ -154,7 +154,6 @@
             this.Controls.Add(this.titleTextBox);
             this.Name = "AddKeyForm";
             this.Text = "AddKeyForm";
-            this.Load += new System.EventHandler(this.AddKeyForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -114,11 +114,6 @@ namespace PasswordManager_Desktop
             textBox2.UseSystemPasswordChar = (textBox2.UseSystemPasswordChar) ? false : true;
         }
 
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         
     }
 }
