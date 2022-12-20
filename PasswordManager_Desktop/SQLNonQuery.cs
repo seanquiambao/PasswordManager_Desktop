@@ -54,6 +54,15 @@ namespace PasswordManager_Desktop
             
             
         }
+
+        public void DeleteDataFromTable(string target, string column, string tableName)
+        {
+            SQLDatabase.conn.Open();
+            string s = $"DELETE FROM {tableName} WHERE {column} = '{target}';";
+            Console.WriteLine(s);
+            _executeNonQueryStatement(s);
+            SQLDatabase.conn.Close();
+        }
         
         public void CreateUserTable(string username)
         {

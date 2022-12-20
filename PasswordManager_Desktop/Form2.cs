@@ -12,6 +12,8 @@ namespace PasswordManager_Desktop
 {
     public partial class Form2 : Form
     {
+
+        private int rowIndex = 0;
         public Form2()
         {
             InitializeComponent();
@@ -82,6 +84,19 @@ namespace PasswordManager_Desktop
             LoadUserTable(userAccounts);
         }
 
+        private void userAccounts_MouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                this.rowIndex = e.RowIndex;
+                ContextMenu menu = new ContextMenu();
+                menu.MenuItems.Add(new MenuItem("Add Key", new EventHandler(newKeyToolStripMenuItem_Click)));
+                menu.MenuItems.Add(new MenuItem("Edit Key"));
+                menu.MenuItems.Add(new MenuItem("Delete Key", new EventHandler(deleteKey)));
+                menu.Show(userAccounts, new Point(e.X, e.Y));
+            }
+        }
+
         private void userAccounts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             string username = Program.GetUsername();
@@ -103,7 +118,25 @@ namespace PasswordManager_Desktop
                 Clipboard.SetText(plainPassword);
 
             }
-            MessageBox.Show($"Copied value to clipboard", "Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Copied password to clipboard", "Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void deleteKey(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to delete the key?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.No) return;
+
+            DataGridViewRow row = userAccounts.Rows[this.rowIndex];
+            string target = row.Cells[0].Value.ToString();
+
+            string username = Program.GetUsername();
+
+            Program.NonQuery.DeleteDataFromTable(target, "Title", username);
+
+            LoadUserTable(userAccounts);
+            
+        }
+
+
     }
 }

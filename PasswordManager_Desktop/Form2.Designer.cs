@@ -66,21 +66,21 @@
             // newKeyToolStripMenuItem
             // 
             this.newKeyToolStripMenuItem.Name = "newKeyToolStripMenuItem";
-            this.newKeyToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.newKeyToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.newKeyToolStripMenuItem.Text = "New Key";
             this.newKeyToolStripMenuItem.Click += new System.EventHandler(this.newKeyToolStripMenuItem_Click);
             // 
             // refreshTableToolStripMenuItem
             // 
             this.refreshTableToolStripMenuItem.Name = "refreshTableToolStripMenuItem";
-            this.refreshTableToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.refreshTableToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.refreshTableToolStripMenuItem.Text = "Refresh Table";
             this.refreshTableToolStripMenuItem.Click += new System.EventHandler(this.refreshTableToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -102,6 +102,7 @@
             this.userAccounts.Size = new System.Drawing.Size(240, 150);
             this.userAccounts.TabIndex = 1;
             this.userAccounts.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userAccounts_CellDoubleClick);
+            this.userAccounts.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.userAccounts_MouseClick);
             // 
             // Form2
             // 
