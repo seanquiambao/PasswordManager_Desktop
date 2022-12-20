@@ -63,6 +63,33 @@ namespace PasswordManager_Desktop
             _executeNonQueryStatement(s);
             SQLDatabase.conn.Close();
         }
+
+        public void UpdateUserAccountRow(string target, string[] modifiedValues, byte[] modifiedPassword, string tableName)
+        {
+            SQLDatabase.conn.Open();
+            string s = $"UPDATE {tableName} SET " +
+                $"Title = '{modifiedValues[0]}', " +
+                $"Username = '{modifiedValues[1]}', " +
+                $"Password = @password, " +
+                $"URL = '{modifiedValues[2]}' " +
+                $"WHERE Title = '{target}'";
+
+            Console.WriteLine(s);
+            try
+            {
+                SqlCommand cmd = new SqlCommand(s, SQLDatabase.conn);
+                cmd.Parameters.AddWithValue("@password", modifiedPassword);
+                cmd.ExecuteScalar();
+            }
+            catch (SqlException ex)
+            {
+                SQLDatabase._throwError(ex);
+            }
+            finally
+            {
+                SQLDatabase.conn.Close();
+            }
+        }
         
         public void CreateUserTable(string username)
         {

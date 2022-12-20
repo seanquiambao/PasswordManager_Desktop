@@ -70,5 +70,10 @@ namespace PasswordManager_Desktop
         {
             this.Close();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            passwordTextBox.UseSystemPasswordChar = (passwordTextBox.UseSystemPasswordChar) ? false : true;
+        }
     }
 }

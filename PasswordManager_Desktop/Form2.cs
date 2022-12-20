@@ -27,6 +27,18 @@ namespace PasswordManager_Desktop
             AddKeyWindows.Show();
         }
 
+        private void modifyKey(object sender, EventArgs e)
+        {
+            DataGridViewRow row = userAccounts.Rows[this.rowIndex];
+            string target = row.Cells[0].Value.ToString();
+            string username = Program.GetUsername();
+            DataTable data = Program.Query.GetDataFromTable(target, "Title", username);
+
+            var ModifyKeyWindows = new ModifyKeyForm();
+            ModifyKeyWindows.SetDataTable(data);
+            ModifyKeyWindows.Show();
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -91,7 +103,7 @@ namespace PasswordManager_Desktop
                 this.rowIndex = e.RowIndex;
                 ContextMenu menu = new ContextMenu();
                 menu.MenuItems.Add(new MenuItem("Add Key", new EventHandler(newKeyToolStripMenuItem_Click)));
-                menu.MenuItems.Add(new MenuItem("Edit Key"));
+                menu.MenuItems.Add(new MenuItem("Edit Key", new EventHandler(modifyKey)));
                 menu.MenuItems.Add(new MenuItem("Delete Key", new EventHandler(deleteKey)));
                 menu.Show(userAccounts, new Point(e.X, e.Y));
             }
