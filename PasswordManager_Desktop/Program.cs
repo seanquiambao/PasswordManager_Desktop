@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using PasswordManager_Desktop.src;
 
 namespace PasswordManager_Desktop
 {
@@ -19,6 +20,7 @@ namespace PasswordManager_Desktop
         public static SQLQuery Query;
         public static Hashing HashAlgorithm;
         public static Encryption AESAlgorithm;
+        public static ReadingWriting RW;
         [STAThread]
         static void Main()
         {
@@ -27,6 +29,7 @@ namespace PasswordManager_Desktop
             Query = new SQLQuery();
             HashAlgorithm = new Hashing();
             AESAlgorithm = new Encryption();
+            RW = new ReadingWriting();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

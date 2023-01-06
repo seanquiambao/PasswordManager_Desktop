@@ -149,6 +149,34 @@ namespace PasswordManager_Desktop
             
         }
 
+        private void exportCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            string username = Program.GetUsername();
+            if(fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Program.RW.createCSVFile(fbd.SelectedPath, username);
+            }
+            MessageBox.Show($"Exported to {fbd.SelectedPath}\\{username}.csv", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
+        private void importCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if(ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileExt = System.IO.Path.GetExtension(ofd.FileName);
+                string username = Program.GetUsername();
+                if (fileExt != ".csv")
+                {
+                    MessageBox.Show($"Error! {ofd.FileName} is not a .csv file...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                Program.RW.ReadFromCSVFile(ofd.FileName, username);
+            }
+
+            MessageBox.Show($"Imported {ofd.FileName}! Please refresh the table to view your imported data!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

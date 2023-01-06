@@ -37,6 +37,8 @@
             this.testDBDataSet = new PasswordManager_Desktop.TestDBDataSet();
             this.testDBDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.userAccounts = new System.Windows.Forms.DataGridView();
+            this.exportCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.testDBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.testDBDataSetBindingSource)).BeginInit();
@@ -58,6 +60,8 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newKeyToolStripMenuItem,
             this.refreshTableToolStripMenuItem,
+            this.exportCSVToolStripMenuItem,
+            this.importCSVToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -66,21 +70,21 @@
             // newKeyToolStripMenuItem
             // 
             this.newKeyToolStripMenuItem.Name = "newKeyToolStripMenuItem";
-            this.newKeyToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.newKeyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newKeyToolStripMenuItem.Text = "New Key";
             this.newKeyToolStripMenuItem.Click += new System.EventHandler(this.newKeyToolStripMenuItem_Click);
             // 
             // refreshTableToolStripMenuItem
             // 
             this.refreshTableToolStripMenuItem.Name = "refreshTableToolStripMenuItem";
-            this.refreshTableToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.refreshTableToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.refreshTableToolStripMenuItem.Text = "Refresh Table";
             this.refreshTableToolStripMenuItem.Click += new System.EventHandler(this.refreshTableToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -103,6 +107,20 @@
             this.userAccounts.TabIndex = 1;
             this.userAccounts.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userAccounts_CellDoubleClick);
             this.userAccounts.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.userAccounts_MouseClick);
+            // 
+            // exportCSVToolStripMenuItem
+            // 
+            this.exportCSVToolStripMenuItem.Name = "exportCSVToolStripMenuItem";
+            this.exportCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportCSVToolStripMenuItem.Text = "Export CSV";
+            this.exportCSVToolStripMenuItem.Click += new System.EventHandler(this.exportCSVToolStripMenuItem_Click);
+            // 
+            // importCSVToolStripMenuItem
+            // 
+            this.importCSVToolStripMenuItem.Name = "importCSVToolStripMenuItem";
+            this.importCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importCSVToolStripMenuItem.Text = "Import CSV";
+            this.importCSVToolStripMenuItem.Click += new System.EventHandler(this.importCSVToolStripMenuItem_Click);
             // 
             // Form2
             // 
@@ -134,5 +152,7 @@
         private System.Windows.Forms.BindingSource testDBDataSetBindingSource;
         private System.Windows.Forms.ToolStripMenuItem refreshTableToolStripMenuItem;
         private System.Windows.Forms.DataGridView userAccounts;
+        private System.Windows.Forms.ToolStripMenuItem exportCSVToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importCSVToolStripMenuItem;
     }
 }
